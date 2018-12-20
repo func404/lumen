@@ -66,6 +66,14 @@ $app->singleton(
 // $app->routeMiddleware([
 //     'auth' => App\Http\Middleware\Authenticate::class,
 // ]);
+// 
+// 添加session中间件
+$app->middleware([
+    Illuminate\Session\Middleware\StartSession::class
+]); 
+
+//设置session别名
+$app->alias('session', 'Illuminate\Session\SessionManager');
 
 /*
 |--------------------------------------------------------------------------
@@ -81,6 +89,8 @@ $app->singleton(
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
+// 注册 SessionServiceProvider
+$app->register(Illuminate\Session\SessionServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -92,6 +102,8 @@ $app->singleton(
 | can respond to, as well as the controllers that may handle them.
 |
 */
+// 载入session相关配置
+$app->configure('session');
 
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
